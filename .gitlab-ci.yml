@@ -1,0 +1,4 @@
+include:
+  - project: 'internal/pipelines'
+    ref: main
+    file: 'main_pipelines.yml'

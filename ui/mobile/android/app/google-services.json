@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1033117722029",
+    "project_id": "fa-indev",
+    "storage_bucket": "fa-indev.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033117722029:android:60f304d89712ef733ced24",
+        "android_client_info": {
+          "package_name": "com.example.mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqhpeTgQz7dQeZFTK6E1U2KTBf_N-6cn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

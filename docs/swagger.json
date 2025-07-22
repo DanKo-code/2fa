@@ -1,0 +1,380 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "service for 2fa",
+        "title": "2FA",
+        "contact": {},
+        "version": "0.1.0"
+    },
+    "paths": {
+        "/health": {
+            "get": {
+                "description": "Получить статус работы сервера",
+                "tags": [
+                    "Info"
+                ],
+                "summary": "Получить статус работы сервера",
+                "operationId": "health",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/push-answer": {
+            "post": {
+                "description": "Ответ на push",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Push answer"
+                ],
+                "summary": "Ответ на push",
+                "operationId": "push-answer",
+                "parameters": [
+                    {
+                        "description": "Параметры входа",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.PushAnswerRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any"
+                        }
+                    }
+                }
+            }
+        },
+        "/send-push-for-debug": {
+            "post": {
+                "description": "Отправить push и дожидаться ответа (эмуляция vpn client). Для тестирования",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Send push"
+                ],
+                "summary": "Отправить push и дожидаться ответа",
+                "operationId": "send-push",
+                "parameters": [
+                    {
+                        "description": "Параметры входа",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.PushRequestRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any"
+                        }
+                    }
+                }
+            }
+        },
+        "/sign-in": {
+            "post": {
+                "description": "Вход",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Вход",
+                "operationId": "sign-in",
+                "parameters": [
+                    {
+                        "description": "Параметры входа",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.SignInRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any"
+                        }
+                    }
+                }
+            }
+        },
+        "/sign-in-without-sms": {
+            "post": {
+                "description": "Вход без смс (В целях debug и экономии sms запросов на rocketsms)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth Without SMS"
+                ],
+                "summary": "Вход без смс",
+                "operationId": "sign-in-without-sms",
+                "parameters": [
+                    {
+                        "description": "Параметры входа",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.SignInRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any"
+                        }
+                    }
+                }
+            }
+        },
+        "/verify-code": {
+            "post": {
+                "description": "Проверка кода",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Verify code"
+                ],
+                "summary": "Проверка кода",
+                "operationId": "verify-code",
+                "parameters": [
+                    {
+                        "description": "Параметры входа",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.VerifyCodeRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.PushAnswerRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "push-answer-sid"
+            ],
+            "properties": {
+                "answer": {
+                    "description": "Answer",
+                    "type": "boolean"
+                },
+                "email": {
+                    "description": "Email",
+                    "type": "string"
+                },
+                "push-answer-sid": {
+                    "description": "Push Answer SID",
+                    "type": "string"
+                }
+            }
+        },
+        "gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.PushRequestRequest": {
+            "type": "object",
+            "required": [
+                "email"
+            ],
+            "properties": {
+                "email": {
+                    "description": "Email",
+                    "type": "string"
+                }
+            }
+        },
+        "gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "description": "Данные"
+                },
+                "message": {
+                    "description": "Сообщение",
+                    "type": "string"
+                }
+            }
+        },
+        "gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.SignInRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "description": "Email",
+                    "type": "string"
+                },
+                "password": {
+                    "description": "Пароль",
+                    "type": "string"
+                }
+            }
+        },
+        "gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.VerifyCodeRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "fcm-code",
+                "first-factor-code"
+            ],
+            "properties": {
+                "email": {
+                    "description": "Email",
+                    "type": "string"
+                },
+                "fcm-code": {
+                    "description": "FCM code",
+                    "type": "string"
+                },
+                "first-factor-code": {
+                    "description": "First factor code",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

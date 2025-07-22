@@ -1,0 +1,254 @@
+definitions:
+  gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.PushAnswerRequest:
+    properties:
+      answer:
+        description: Answer
+        type: boolean
+      email:
+        description: Email
+        type: string
+      push-answer-sid:
+        description: Push Answer SID
+        type: string
+    required:
+    - email
+    - push-answer-sid
+    type: object
+  gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.PushRequestRequest:
+    properties:
+      email:
+        description: Email
+        type: string
+    required:
+    - email
+    type: object
+  gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any:
+    properties:
+      data:
+        description: Данные
+      message:
+        description: Сообщение
+        type: string
+    type: object
+  gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.SignInRequest:
+    properties:
+      email:
+        description: Email
+        type: string
+      password:
+        description: Пароль
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.VerifyCodeRequest:
+    properties:
+      email:
+        description: Email
+        type: string
+      fcm-code:
+        description: FCM code
+        type: string
+      first-factor-code:
+        description: First factor code
+        type: string
+    required:
+    - email
+    - fcm-code
+    - first-factor-code
+    type: object
+info:
+  contact: {}
+  description: service for 2fa
+  title: 2FA
+  version: 0.1.0
+paths:
+  /health:
+    get:
+      description: Получить статус работы сервера
+      operationId: health
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Получить статус работы сервера
+      tags:
+      - Info
+  /push-answer:
+    post:
+      consumes:
+      - application/json
+      description: Ответ на push
+      operationId: push-answer
+      parameters:
+      - description: Параметры входа
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.PushAnswerRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any'
+      summary: Ответ на push
+      tags:
+      - Push answer
+  /send-push-for-debug:
+    post:
+      consumes:
+      - application/json
+      description: Отправить push и дожидаться ответа (эмуляция vpn client). Для тестирования
+      operationId: send-push
+      parameters:
+      - description: Параметры входа
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.PushRequestRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any'
+      summary: Отправить push и дожидаться ответа
+      tags:
+      - Send push
+  /sign-in:
+    post:
+      consumes:
+      - application/json
+      description: Вход
+      operationId: sign-in
+      parameters:
+      - description: Параметры входа
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.SignInRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any'
+      summary: Вход
+      tags:
+      - Auth
+  /sign-in-without-sms:
+    post:
+      consumes:
+      - application/json
+      description: Вход без смс (В целях debug и экономии sms запросов на rocketsms)
+      operationId: sign-in-without-sms
+      parameters:
+      - description: Параметры входа
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.SignInRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any'
+      summary: Вход без смс
+      tags:
+      - Auth Without SMS
+  /verify-code:
+    post:
+      consumes:
+      - application/json
+      description: Проверка кода
+      operationId: verify-code
+      parameters:
+      - description: Параметры входа
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.VerifyCodeRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gitlab_indev_by_2fa_2fa_go_be_internal_domain_http.Response-any'
+      summary: Проверка кода
+      tags:
+      - Verify code
+swagger: "2.0"
